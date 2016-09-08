@@ -40,6 +40,7 @@ class Point:
         y = self.y + vector.j
         z = self.z + vector.k
         newPoint = Point(x, y, z)
+
         return newPoint
 
     def subtractVector(self, vector):
