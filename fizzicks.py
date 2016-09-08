@@ -15,11 +15,14 @@ from math import sqrt
 
 class Point:
     # Represents a 3 dimensional point in cartesian coordinates
-    def __init__(self, x, y, z):
+    def __init__(self, x, y, z, width = 1, height = 1, depth = 1):
         self.x = x
         self.y = y
         self.z = z
         self.xyz = (x, y, z)
+        self.collision_zone.width = width
+        self.collision_zone.height = height
+        self.collision_zone.depth = depth
 
     def __str__(self):
         output = "({}, {}, {})".format(round(self.x, 3), round(self.y, 3), round(self.z,3))
@@ -52,7 +55,7 @@ class Point:
         return newPoint
 
     def setPoint(self, x, y, z):
-        # expects 3 coordinates, resets the parameters of the Point object
+        # Expects 3 coordinates, resets the parameters of the Point object
         self.x = x
         self.y = y
         self.z = z
@@ -90,7 +93,7 @@ class Vector:
     def linearTransform(self, matrix):
         # Expects a 3 x 3 matrix as a list vectors
         # Returns the resulting vector of a linear transformation
-        # defined by the transformation matrix
+        #             defined by the transformation matrix
         value_list = []
         for x in range(3):
             i = matrix[x][0] * self.i
@@ -150,6 +153,7 @@ class Physical_Object:
         # velocity expects a Vector object
         # restitution expects a Float where 0 <= Float <= 1
         #          -- coefficient represents elasticity / bounciness
+        #          -- useful in determining exit velocity after collisions
         self.mass = mass
         self.position = position
         self.velocity = velocity
