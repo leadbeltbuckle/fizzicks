@@ -8,7 +8,7 @@ Point
 Vector
 ---3D vector representing the difference between two points
 Physical_Object
----represents any object with mass, position[point], and velocity[vector]
+---represents any object with mass, position, velocity, and restitution
 '''
 
 from math import sqrt
