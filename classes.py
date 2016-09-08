@@ -1,3 +1,13 @@
+'''
+classes.py
+Point
+---3D point in cartesian coordinates
+Vector
+---3D vector representing the difference between two points
+Physical_Object
+---represents any object with mass, position[point], and velocity[vector]
+'''
+
 from math import sqrt
 
 class Point:
