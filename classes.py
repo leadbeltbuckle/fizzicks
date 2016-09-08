@@ -144,13 +144,16 @@ class Vector:
         return outputVector
 
 class Physical_Object:
-    def __init__(self, mass, position, velocity):
+    def __init__(self, mass, position, velocity, restitution):
         # mass expects a single real number
         # position expects a Point object
         # velocity expects a Vector object
+        # restitution expects a Float where 0 <= Float <= 1
+        #          -- coefficient represents elasticity / bounciness
         self.mass = mass
         self.position = position
         self.velocity = velocity
+        self.restitution = restitution
 
     def __str__(self):
         return("Mass: {}\nPosition: {}\nVelocity: {}".format(self.mass, self.position, self.velocity))
@@ -173,13 +176,17 @@ class Physical_Object:
         return acceleration
 
 '''A Basic Simulation of a Moving Ball'''
-TIMESTEP = 20000
+TIMESTEP = 20000                                    # TIMESTEP adjusts the accuracy of the simulation
 origin = Point(0, 0, 0)
 gravity = Vector(0, -9.81 / TIMESTEP, 0)            # SI Units
 ball_pos = Point(0, 50, 0)                          # Ball starts at y = 50
 ball_vel = Vector(30 / TIMESTEP, 10 / TIMESTEP, 0)  # Ball has initial forward/upward velocity
-ball = Physical_Object(5, ball_pos, ball_vel)       # Initialize the ball
+ball_restitution = 1                                # Ball is 100% elastic -- no energy loss in bounce
 
+# Initialize the ball
+ball = Physical_Object(5, ball_pos, ball_vel, ball_restitution)
+
+# Initialize the clock and throw the ball
 counter = 0
 while ball.position.y > 0:
     print(ball)
