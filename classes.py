@@ -22,6 +22,7 @@ class Point:
         return outputVector
 
     def addVector(self, vector):
+        # Expects a Vector object, returns a Point
         x = self.x + vector.i
         y = self.y + vector.j
         z = self.z + vector.k
@@ -29,6 +30,7 @@ class Point:
         return newPoint
 
     def subtractVector(self, vector):
+        # Expects a Vector object, returns a Point
         x = self.x - vector.i
         y = self.y - vector.j
         z = self.z - vector.k
@@ -36,6 +38,7 @@ class Point:
         return newPoint
 
     def setPoint(self, x, y, z):
+        # expects 3 coordinates, resets the parameters of the Point object
         self.x = x
         self.y = y
         self.z = z
@@ -57,12 +60,14 @@ class Vector:
         return output
 
     def subtractVector(self, vector):
+        # Expects Vector object, returns Vector object
         outputVector = Vector(self.i - vector.i,
                               self.j - vector.j,
                               self.k - vector.k)
         return outputVector
 
     def addVector(self, vector):
+        # Expects Vector object, returns Vector object
         outputVector = Vector(self.i + vector.i,
                               self.j + vector.j,
                               self.k + vector.k)
@@ -85,6 +90,8 @@ class Vector:
         return outputVector
 
     def scale(self, vector):
+        # Expects a Vector object, Returns a Vector object
+        # Will also work with Int or Float --> applies equally to i, j, k
         try:
             i = self.i * vector.i
             j = self.j * vector.j
@@ -98,10 +105,12 @@ class Vector:
         return outputVector
 
     def dotProduct(self, vector):
+        # Expects Vector object, Returns Float
         product = (self.i * vector.i) + (self.j * vector.j) + (self.k * vector.k)
         return product
 
     def crossProduct(self, vector):
+        # Expects Vector object, Returns Vector object
         i =  (self.j * vector.k) - (self.k * vector.j)
         j = (self.k * vector.i) - (self.i * vector.k)
         k = (self.i * vector.j) - (self.j * vector.i)
@@ -109,11 +118,13 @@ class Vector:
         return outputVector
 
     def scalarProjectionOnVector(self, vector):
+        # Expects a Vector object, returns Float
         output_scalar = self.dotProduct(vector) / vector.magnitude
         return output_scalar
 
     def vectorProjectionOnVector(self, vector):
-        scalar = round((self.dotProduct(vector) / vector.magnitude**2), 3)
+        # Expect a Vector object, and returns the resultant vector from the projection operation
+        scalar = self.scalarProjectionOnVector(vector) / vector.magnitude
         scalar_vector = Vector(scalar, scalar, scalar)
         outputVector = vector.scale(scalar_vector)
         return outputVector
@@ -131,6 +142,7 @@ class Physical_Object:
         return("Mass: {}\nPosition: {}\nVelocity: {}".format(self.mass, self.position, self.velocity))
 
     def move(self):
+        # Update the position based upon current velocity
         self.position = self.position.addVector(self.velocity)
         return True
 
@@ -146,12 +158,13 @@ class Physical_Object:
         acceleration = forceVector.scale(self.mass)
         return acceleration
 
+'''A Basic Simulation of a Moving Ball'''
 TIMESTEP = 20000
 origin = Point(0, 0, 0)
-gravity = Vector(0, -9.81 / TIMESTEP, 0) # SI Units
-ball_pos = Point(0, 50, 0)    # Ball starts at y = 50
+gravity = Vector(0, -9.81 / TIMESTEP, 0)            # SI Units
+ball_pos = Point(0, 50, 0)                          # Ball starts at y = 50
 ball_vel = Vector(30 / TIMESTEP, 10 / TIMESTEP, 0)  # Ball has initial forward/upward velocity
-ball = Physical_Object(5, ball_pos, ball_vel)
+ball = Physical_Object(5, ball_pos, ball_vel)       # Initialize the ball
 
 counter = 0
 while ball.position.y > 0:
