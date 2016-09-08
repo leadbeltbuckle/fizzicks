@@ -1,5 +1,8 @@
+# -*- coding: utf-8 -*-
 '''
-classes.py
+This module describes a class structure to represent physical objects in
+3-dimensional space. The 3 foundational classes are Point, Vector, and Physical_Object
+
 Point
 ---3D point in cartesian coordinates
 Vector
