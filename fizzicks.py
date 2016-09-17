@@ -20,9 +20,9 @@ class Point:
         self.y = y
         self.z = z
         self.xyz = (x, y, z)
-        self.collision_zone.width = width
-        self.collision_zone.height = height
-        self.collision_zone.depth = depth
+        self.collision_zone_width = width
+        self.collision_zone_height = height
+        self.collision_zone_depth = depth
 
     def __str__(self):
         output = "({}, {}, {})".format(round(self.x, 3), round(self.y, 3), round(self.z,3))
@@ -128,7 +128,7 @@ class Vector:
 
     def crossProduct(self, vector):
         # Expects Vector object, Returns Vector object
-        i =  (self.j * vector.k) - (self.k * vector.j)
+        i = (self.j * vector.k) - (self.k * vector.j)
         j = (self.k * vector.i) - (self.i * vector.k)
         k = (self.i * vector.j) - (self.j * vector.i)
         outputVector = Vector(i, j, k)
@@ -180,7 +180,7 @@ class Physical_Object:
         return acceleration
 
 '''A Basic Simulation of a Moving Ball'''
-TIMESTEP = 20000                                    # TIMESTEP adjusts the accuracy of the simulation
+TIMESTEP = 50                                    # TIMESTEP adjusts the accuracy of the simulation
 origin = Point(0, 0, 0)
 gravity = Vector(0, -9.81 / TIMESTEP, 0)            # SI Units
 ball_pos = Point(0, 50, 0)                          # Ball starts at y = 50
