@@ -9,6 +9,8 @@ Vector
 ---3D vector representing the difference between two points
 Physical_Object
 ---represents any object with mass, position, velocity, and restitution
+
+By leadbeltbuckle and burke-md
 '''
 
 from math import sqrt
