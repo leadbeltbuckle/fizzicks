@@ -149,7 +149,7 @@ class Vector:
         return outputVector
 
 class Physical_Object:
-    def __init__(self, mass, position, velocity, restitution):
+    def __init__(self, mass, position, velocity, restitution = 1):
         # mass expects a single real number
         # position expects a Point object
         # velocity expects a Vector object
@@ -167,13 +167,11 @@ class Physical_Object:
     def move(self):
         # Update the position based upon current velocity
         self.position = self.position.addVector(self.velocity)
-        return True
 
-    def accelerate(self, accelerationVector):
-        # Expects a 3 dimensional acceleration Vector
+    def updateVelocity(self, velocityChange):
+        # Expects a 3 dimensional Vector
         # Updates Physical_Object to new velocity Vector
-        self.velocity = self.velocity.addVector(accelerationVector)
-        return True
+        self.velocity = self.velocity.addVector(velocityChange)
 
     def calculateAcceleration(self, forceVector):
         # Expects forceVector as a 3 dimensional Vector
@@ -181,22 +179,20 @@ class Physical_Object:
         acceleration = forceVector.scale(self.mass)
         return acceleration
 
-'''A Basic Simulation of a Moving Ball'''
-TIMESTEP = 50                                    # TIMESTEP adjusts the accuracy of the simulation
+'''A Basic Simulation of a moving ball'''
 origin = Point(0, 0, 0)
-gravity = Vector(0, -9.81 / TIMESTEP, 0)            # SI Units
-ball_pos = Point(0, 50, 0)                          # Ball starts at y = 50
-ball_vel = Vector(30 / TIMESTEP, 10 / TIMESTEP, 0)  # Ball has initial forward/upward velocity
-ball_restitution = 1                                # Ball is 100% elastic -- no energy loss in bounce
+gravity = Vector(0, -9.81, 0)  # SI Units
+ball_pos = Point(0, 50, 0)  # Ball starts at y = 50
+ball_vel = Vector(30, 10, 0)  # Ball has initial forward/upward velocity
 
 # Initialize the ball
-ball = Physical_Object(5, ball_pos, ball_vel, ball_restitution)
+ball = Physical_Object(5, ball_pos, ball_vel)
 
 # Initialize the clock and throw the ball
 counter = 0
 while ball.position.y > 0:
     print(ball)
     ball.move()
-    ball.accelerate(gravity)
+    ball.updateVelocity(gravity)
     counter += 1
     print(counter)
