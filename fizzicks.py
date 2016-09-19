@@ -183,9 +183,9 @@ class Physical_Object:
 # TIMESTEP not correctly implemeted. Needs adjustment
 TIMESTEP = 1
 origin = Point(0, 0, 0)
-gravity = Vector(0, -9.81 / TIMESTEP, 0)  # SI Units
+gravity = Vector(0, -9.81 * TIMESTEP, 0)  # SI Units
 ball_pos = Point(0, 50, 0)  # Ball starts at y = 50
-ball_vel = Vector(30 / TIMESTEP, 10 / TIMESTEP, 0)  # Ball has initial forward/upward velocity
+ball_vel = Vector(30 * TIMESTEP, 10 * TIMESTEP, 0)  # Ball has initial forward/upward velocity
 
 # Initialize the ball
 ball = Physical_Object(5, ball_pos, ball_vel)
