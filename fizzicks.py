@@ -34,27 +34,27 @@ class Point:
     def calculateVectorFrom(self, point):
         # Takes a point, subtracts from itself, and produces a vector
         # For point P, given point O, finds vector OP
-        outputVector = Vector(self.x - point.x,
+        output_vector = Vector(self.x - point.x,
                               self.y - point.y,
                               self.z - point.z)
-        return outputVector
+        return output_vector
 
     def addVector(self, vector):
         # Expects a Vector object, returns a Point
         x = self.x + vector.i
         y = self.y + vector.j
         z = self.z + vector.k
-        newPoint = Point(x, y, z)
+        new_point = Point(x, y, z)
 
-        return newPoint
+        return new_point
 
     def subtractVector(self, vector):
         # Expects a Vector object, returns a Point
         x = self.x - vector.i
         y = self.y - vector.j
         z = self.z - vector.k
-        newPoint = Point(x, y, z)
-        return newPoint
+        new_point = Point(x, y, z)
+        return new_point
 
     def setPoint(self, x, y, z):
         # Expects 3 coordinates, resets the parameters of the Point object
@@ -80,17 +80,17 @@ class Vector:
 
     def subtractVector(self, vector):
         # Expects Vector object, returns Vector object
-        outputVector = Vector(self.i - vector.i,
+        output_vector = Vector(self.i - vector.i,
                               self.j - vector.j,
                               self.k - vector.k)
-        return outputVector
+        return output_vector
 
     def addVector(self, vector):
         # Expects Vector object, returns Vector object
-        outputVector = Vector(self.i + vector.i,
+        output_vector = Vector(self.i + vector.i,
                               self.j + vector.j,
                               self.k + vector.k)
-        return outputVector
+        return output_vector
 
     def linearTransform(self, matrix):
         # Expects a 3 x 3 matrix as a list vectors
@@ -103,10 +103,10 @@ class Vector:
             k = matrix[x][2] * self.k
             value_list.append(i + j + k)
 
-        outputVector = Vector(value_list[0],
+        output_vector = Vector(value_list[0],
                               value_list[1],
                               value_list[2])
-        return outputVector
+        return output_vector
 
     def scale(self, vector):
         # Expects a Vector object, Returns a Vector object
@@ -120,8 +120,8 @@ class Vector:
             j = self.j * vector
             k = self.k * vector
 
-        outputVector = Vector(i, j, k)
-        return outputVector
+        output_vector = Vector(i, j, k)
+        return output_vector
 
     def dotProduct(self, vector):
         # Expects Vector object, Returns Float
@@ -133,8 +133,8 @@ class Vector:
         i = (self.j * vector.k) - (self.k * vector.j)
         j = (self.k * vector.i) - (self.i * vector.k)
         k = (self.i * vector.j) - (self.j * vector.i)
-        outputVector = Vector(i, j, k)
-        return outputVector
+        output_vector = Vector(i, j, k)
+        return output_vector
 
     def scalarProjectionOnVector(self, vector):
         # Expects a Vector object, returns Float
@@ -145,8 +145,8 @@ class Vector:
         # Expect a Vector object, and returns the resultant vector from the projection operation
         scalar = self.scalarProjectionOnVector(vector) / vector.magnitude
         scalar_vector = Vector(scalar, scalar, scalar)
-        outputVector = vector.scale(scalar_vector)
-        return outputVector
+        output_vector = vector.scale(scalar_vector)
+        return output_vector
 
 class Physical_Object:
     def __init__(self, mass, position, velocity, restitution = 1):
@@ -168,24 +168,23 @@ class Physical_Object:
         # Update the position based upon current velocity
         self.position = self.position.addVector(self.velocity)
 
-    def updateVelocity(self, velocityChange):
+    def updateVelocity(self, velocity_change):
         # Expects a 3 dimensional Vector
         # Updates Physical_Object to new velocity Vector
-        self.velocity = self.velocity.addVector(velocityChange)
+        self.velocity = self.velocity.addVector(velocity_change)
 
-    def calculateAcceleration(self, forceVector):
-        # Expects forceVector as a 3 dimensional Vector
+    def calculateAcceleration(self, force_vector):
+        # Expects force_vector as a 3 dimensional Vector
         # Returns acceleration as a 3 dimensional Vector
-        acceleration = forceVector.scale((1 / self.mass))
+        acceleration = force_vector.scale((1 / self.mass))
         return acceleration
 
 '''A Basic Simulation of a moving ball'''
-# TIMESTEP not correctly implemeted. Needs adjustment
-TIMESTEP = 1
+time_step = 1 # Decrease time_step to increase simulation accuracy
 origin = Point(0, 0, 0)
-gravity = Vector(0, -9.81 * TIMESTEP, 0)  # SI Units
+gravity = Vector(0, -9.81 * time_step, 0)  # SI Units
 ball_pos = Point(0, 50, 0)  # Ball starts at y = 50
-ball_vel = Vector(30 * TIMESTEP, 10 * TIMESTEP, 0)  # Ball has initial forward/upward velocity
+ball_vel = Vector(30 * time_step, 10 * time_step, 0)  # Ball has initial forward/upward velocity
 
 # Initialize the ball
 ball = Physical_Object(5, ball_pos, ball_vel)
