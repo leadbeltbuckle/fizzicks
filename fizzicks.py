@@ -13,7 +13,7 @@ Physical_Object
 By leadbeltbuckle and burke-md
 '''
 
-from math import sqrt
+from math import sqrt, cos, sin
 
 class Point:
     # Represents a 3 dimensional point in cartesian coordinates
@@ -108,6 +108,29 @@ class Vector:
                               value_list[2])
         return output_vector
 
+    # Needs work. Doesn't operate as expected yet.
+    def rotate(self, x_angle = 0, y_angle = 0, z_angle = 0):
+        # Expects 0-3 angles [radians] of rotation relative to the x-axis, y-axis, and z-axis
+        # Returns a Vector object of equal magnitude, rotated about the specified axes
+        temp_vector = Vector(self.i, self.j, self.k)
+
+        # Create rotation matrices
+        rotation_matrix_x = [[1, 0, 0],
+                             [0, cos(x_angle), -sin(x_angle)],
+                             [0, sin(x_angle), cos(x_angle)]]
+        rotation_matrix_y = [[cos(y_angle), 0, sin(y_angle)],
+                             [0, 1, 0],
+                             [-sin(y_angle), 0, cos(y_angle)]]
+        rotation_matrix_z = [[cos(z_angle), -sin(z_angle), 0],
+                             [sin(z_angle), cos(z_angle), 0],
+                             [0, 0, 1]]
+        all_rotations = [rotation_matrix_x, rotation_matrix_y, rotation_matrix_z]
+        # Apply rotations to temporary vector
+        for r_matrix in all_rotations:
+            temp_vector = temp_vector.linearTransform(r_matrix)
+
+        return temp_vector
+
     def scale(self, vector):
         # Expects a Vector object, Returns a Vector object
         # Will also work with Int or Float --> applies equally to i, j, k
@@ -178,7 +201,7 @@ class Physical_Object:
         # Returns acceleration as a 3 dimensional Vector
         acceleration = force_vector.scale((1 / self.mass))
         return acceleration
-
+"""
 '''A Basic Simulation of a moving ball'''
 time_step = 1 # Decrease time_step to increase simulation accuracy
 origin = Point(0, 0, 0)
@@ -197,3 +220,8 @@ while ball.position.y > 0:
     ball.updateVelocity(gravity)
     counter += 1
     print(counter)
+"""
+
+test_v = Vector(1, 0, 0)
+rotated_v = test_v.rotate(0, 1, 0)
+print(rotated_v)
