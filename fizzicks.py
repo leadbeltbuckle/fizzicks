@@ -124,12 +124,19 @@ class Vector:
         rotation_matrix_z = [[cos(z_angle), -sin(z_angle), 0],
                              [sin(z_angle), cos(z_angle), 0],
                              [0, 0, 1]]
-        all_rotations = [rotation_matrix_x, rotation_matrix_y, rotation_matrix_z]
+
+        # Should actually be the product of r_m_x, r_m_y, r_m_z
+        rotation_matrix = [[1, 1, 1],[1, 1, 1],[1, 1, 1]]
+
         # Apply rotations to temporary vector
-        for r_matrix in all_rotations:
-            temp_vector = temp_vector.linearTransform(r_matrix)
+        temp_vector = temp_vector.linearTransform(rotation_matrix)
 
         return temp_vector
+
+    def multiply_matrix(matrix_1, matrix_2):
+        # Should perform matrix multiplication
+        # Expects two matrices as nested lists ie. [[],[],[]] and [[],[],[]]
+        pass
 
     def scale(self, vector):
         # Expects a Vector object, Returns a Vector object
